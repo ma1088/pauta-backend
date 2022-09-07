@@ -34,9 +34,9 @@ public class PautaController {
             pautaStr = new ObjectMapper().writeValueAsString(pauta);
             log.info(pautaStr);
         } catch(JsonProcessingException e){
-            log.severe("criarPauta: (" + pauta.getPauta().getTitulo() + ") impossível converter em JSON " + e.getMessage());
+            log.severe("criarPauta: (" + pauta.getPauta().getTitulo() + ") impossível converter em JSON para exibir " + e.getMessage());
         }
-        
+
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(service.savePauta(
