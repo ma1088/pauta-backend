@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.marilia.pa.pautabackend.dto.PautaDTO;
 import com.marilia.pa.pautabackend.service.PautaService;
 
@@ -29,14 +27,7 @@ public class PautaController {
         value = "criar"
     )
     public ResponseEntity<PautaDTO> criarPauta(@RequestBody PautaDTO pauta){
-        String pautaStr = "{}";
-        try{
-            pautaStr = new ObjectMapper().writeValueAsString(pauta);
-            log.info(pautaStr);
-        } catch(JsonProcessingException e){
-            log.severe("criarPauta: (" + pauta.getPauta().getTitulo() + ") impossível converter em JSON para exibir " + e.getMessage());
-        }
-
+        log.info(pauta.getPauta().getAutor());
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(service.savePauta(
