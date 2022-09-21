@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.marilia.pa.pautabackend.dto.FiltroPautaDTO;
 import com.marilia.pa.pautabackend.dto.PautaDTO;
 import com.marilia.pa.pautabackend.model.Pauta;
 import com.marilia.pa.pautabackend.model.Resposta;
@@ -31,5 +32,9 @@ public class PautaService {
         List<Resposta> resps = new ArrayList<>();
         respostas.forEach(resp -> resps.add(respostaRepo.save(new Resposta(pauta.getIdPauta(), resp.getTexto()))));
         return resps;
+    }
+
+    public List<PautaDTO> getPautas(FiltroPautaDTO filtro) {
+        return null;
     }
 }
