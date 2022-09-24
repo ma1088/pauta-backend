@@ -1,11 +1,14 @@
 package com.marilia.pa.pautabackend.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.marilia.pa.pautabackend.dto.FiltroPautaDTO;
 import com.marilia.pa.pautabackend.dto.PautaDTO;
 import com.marilia.pa.pautabackend.model.Pauta;
 import com.marilia.pa.pautabackend.model.Resposta;
@@ -55,11 +59,47 @@ public class PautaServiceTests {
         assertEquals("não", aPauta.getRespostas().get(1).getTexto());
     }
 
+    @Test
+    public void getPautasTest(){
+        //quando
+        when(pautaRepo.findAllByFilter(
+            any(), 
+            any(),
+            any(), 
+            any(), 
+            any(), 
+            any())).thenReturn(mockPautas());
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(new FiltroPautaDTO());
 
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(3, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
 
     private void configureRepositoryMocks(JpaRepository repository, Object toBeReturned1, Object toBeReturned2){
         when(repository.save(any()))
             .thenReturn(toBeReturned1)
             .thenReturn(toBeReturned2);
+    }
+
+    private List<Pauta> mockPautas(){
+        List<Pauta> pautas = new ArrayList<>();
+        for (Long i = 0L; i < 3; i++){
+            pautas.add(new Pauta(i, "Juca", ZonedDateTime.now(), "titulo", "texto", 1));
+        }
+        return pautas;
+    }
+
+    private List<Resposta> mockRespostas(){
+        List<Resposta> respostas = new ArrayList<>();
+        respostas.addAll(Arrays.asList(new Resposta[] {
+            new Resposta(0L, "sim"), 
+            new Resposta(0L, "não")}
+        ));
+        return respostas;
     }
 }

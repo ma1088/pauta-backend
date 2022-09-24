@@ -10,6 +10,24 @@ public class FiltroPautaDTO {
     private String tituloLike;
     private String textoLike;
     private List<String> autoresIn;
+
+    public FiltroPautaDTO(){
+
+    }
+
+    public FiltroPautaDTO(ZonedDateTime criadoAntesDe, 
+                          ZonedDateTime criadoApos, 
+                          String autorLike, 
+                          String tituloLike, 
+                          String textoLike, 
+                          List<String> autoresIn){
+        this.criadoAntesDe = criadoAntesDe;
+        this.criadoApos = criadoApos;
+        this.autorLike = autorLike;
+        this.autoresIn = autoresIn;
+        this.tituloLike = tituloLike;
+        this.textoLike = textoLike;
+    }
     
     public ZonedDateTime getCriadoAntesDe() {
         return criadoAntesDe;

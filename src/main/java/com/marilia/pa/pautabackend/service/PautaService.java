@@ -35,6 +35,17 @@ public class PautaService {
     }
 
     public List<PautaDTO> getPautas(FiltroPautaDTO filtro) {
-        return null;
+        List<Pauta> pautas = pautaRepo.findAllByFilter(filtro.getCriadoAntesDe(),
+                                                       filtro.getCriadoApos(),
+                                                       filtro.getAutorLike(),
+                                                       filtro.getAutoresIn(),
+                                                       filtro.getTituloLike(),
+                                                       filtro.getTextoLike());
+        List<PautaDTO> pautasComRespostas = new ArrayList<>();
+        pautas.forEach(p -> {
+            List<Resposta> respostas = respostaRepo.findAllByIdPauta(p.getIdPauta());
+            pautasComRespostas.add(new PautaDTO(p, respostas));
+        });
+        return pautasComRespostas;
     }
 }
