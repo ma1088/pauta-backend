@@ -14,7 +14,6 @@ import javax.persistence.Table;
 public class Pauta {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPauta;
     @Column
     private String autor;

@@ -19,10 +19,10 @@ public class RespostaModelTests {
     }
 
     @Test
-    public void setGetIdPergunta(){
+    public void setGetIdPauta(){
         Resposta resp = buildMock();
-        resp.setIdPergunta(2L);
-        assertEquals(2, resp.getIdPergunta());
+        resp.setIdPauta(2L);
+        assertEquals(2, resp.getIdPauta());
     }
 
 }

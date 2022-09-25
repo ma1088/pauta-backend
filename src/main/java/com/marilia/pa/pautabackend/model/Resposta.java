@@ -3,16 +3,19 @@ package com.marilia.pa.pautabackend.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tb_resposta")
 public class Resposta {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idResposta;
     @Column
-    private Long idPergunta;
+    private Long idPauta;
     @Column
     private String texto;
 
@@ -20,8 +23,8 @@ public class Resposta {
 
     }
 
-    public Resposta(Long idPergunta, String texto){
-        this.idPergunta = idPergunta;
+    public Resposta(Long idPauta, String texto){
+        this.idPauta = idPauta;
         this.texto = texto;
     }
 
@@ -31,11 +34,11 @@ public class Resposta {
     public void setIdResposta(Long idResposta) {
         this.idResposta = idResposta;
     }
-    public Long getIdPergunta() {
-        return idPergunta;
+    public Long getIdPauta() {
+        return idPauta;
     }
-    public void setIdPergunta(Long idPergunta) {
-        this.idPergunta = idPergunta;
+    public void setIdPauta(Long idPauta) {
+        this.idPauta = idPauta;
     }
     public String getTexto() {
         return texto;

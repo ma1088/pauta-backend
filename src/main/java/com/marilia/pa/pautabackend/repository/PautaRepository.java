@@ -12,7 +12,9 @@ import com.marilia.pa.pautabackend.model.Pauta;
 
 @Repository
 public interface PautaRepository extends JpaRepository<Pauta, Long>{
-    @Query("select id_pauta, autor,  titulo, texto, dt_criacao, qtd_respostas " +
+
+    List<Pauta> findAllByAutorContains(String autorLike);
+    /*@Query("select id_pauta, autor,  titulo, texto, dt_criacao, qtd_respostas " +
            "  from tb_pauta " +
            " where dt_criacao <= coalesce(:dtCriacaoAntes, dt_criacao) " +
            "   and dt_criacao > coalesce (:dtCriacaoApos, dt_criacao) " +
@@ -27,5 +29,6 @@ public interface PautaRepository extends JpaRepository<Pauta, Long>{
         @Param("autorLike") String autorLike,
         @Param("autorIn") List<String> autorIn,
         @Param("tituloLike") String tituloLike,
-        @Param("textoLike") String textoLike);
+        @Param("textoLike") String textoLike);*/
+    
 }
