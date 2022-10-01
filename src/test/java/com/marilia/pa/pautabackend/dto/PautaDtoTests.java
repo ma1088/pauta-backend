@@ -13,8 +13,8 @@ import com.marilia.pa.pautabackend.model.Resposta;
 
 public class PautaDtoTests {
     public PautaDTO buildMock(){
-        PautaDTO pautaDto = new PautaDTO(new Pauta(), new ArrayList<Resposta>());
-        return pautaDto;
+        PautaDTO PautaDto = new PautaDTO(new Pauta(), new ArrayList<Resposta>());
+        return PautaDto;
     }
 
     @Test

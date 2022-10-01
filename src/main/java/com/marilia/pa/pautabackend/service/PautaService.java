@@ -35,12 +35,6 @@ public class PautaService {
     }
 
     public List<PautaDTO> getPautas(FiltroPautaDTO filtro) {
-        /*List<Pauta> pautas = pautaRepo.findAllByFilter(filtro.getCriadoAntesDe(),
-                                                       filtro.getCriadoApos(),
-                                                       filtro.getAutorLike(),
-                                                       filtro.getAutoresIn(),
-                                                       filtro.getTituloLike(),
-                                                       filtro.getTextoLike());*/
         List<Pauta> pautas = pautaRepo.findAllByAutorContains(filtro.getAutorLike());
         List<PautaDTO> pautasComRespostas = new ArrayList<>();
         pautas.forEach(p -> {

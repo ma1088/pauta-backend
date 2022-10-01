@@ -62,12 +62,7 @@ public class PautaServiceTests {
     @Test
     public void getPautasTest(){
         //quando
-        /*when(pautaRepo.findAllByFilter(
-            any(), 
-            any(),
-            any(), 
-            any(), 
-            any(), 
+        when(pautaRepo.findAllByAutorContains(
             any())).thenReturn(mockPautas());
         when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
         List<PautaDTO> pDto = service.getPautas(new FiltroPautaDTO());
@@ -77,7 +72,7 @@ public class PautaServiceTests {
         assertNotNull(pDto.get(0).getPauta());
         assertNotNull(pDto.get(0).getRespostas());
         assertEquals(3, pDto.size());
-        assertEquals(2,pDto.get(0).getRespostas().size());*/
+        assertEquals(2,pDto.get(0).getRespostas().size());
     }
 
     private void configureRepositoryMocks(JpaRepository repository, Object toBeReturned1, Object toBeReturned2){
