@@ -1,7 +1,6 @@
 package com.marilia.pa.pautabackend.dto;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 public class FiltroPautaDTO {
     private ZonedDateTime criadoAntesDe;
@@ -9,7 +8,6 @@ public class FiltroPautaDTO {
     private String autorLike;
     private String tituloLike;
     private String textoLike;
-    private List<String> autoresIn;
 
     public FiltroPautaDTO(){
 
@@ -19,12 +17,10 @@ public class FiltroPautaDTO {
                           ZonedDateTime criadoApos, 
                           String autorLike, 
                           String tituloLike, 
-                          String textoLike, 
-                          List<String> autoresIn){
+                          String textoLike){
         this.criadoAntesDe = criadoAntesDe;
         this.criadoApos = criadoApos;
         this.autorLike = autorLike;
-        this.autoresIn = autoresIn;
         this.tituloLike = tituloLike;
         this.textoLike = textoLike;
     }
@@ -58,12 +54,6 @@ public class FiltroPautaDTO {
     }
     public void setTextoLike(String textoLike) {
         this.textoLike = textoLike;
-    }
-    public List<String> getAutoresIn() {
-        return autoresIn;
-    }
-    public void setAutoresIn(List<String> autoresIn) {
-        this.autoresIn = autoresIn;
     }
 
 }

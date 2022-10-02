@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
@@ -75,21 +73,4 @@ public class FiltroPautaDTOTests {
         //entao
         assertEquals("água", filtro.getTextoLike());
     }
-
-    @Test
-    public void getSetAutoresIn(){
-        //dado
-        FiltroPautaDTO filtro = buildMock();
-        String[] autoresRef = {"Juca", "Alana", "Debi"};
-        ArrayList<String> autores = new ArrayList<String>(Arrays.asList(autoresRef));
-
-        //quando
-        filtro.setAutoresIn(autores);
-
-        //entao
-        String[] autoresToAssert = filtro.getAutoresIn().toArray(new String[0]);
-        assertEquals(autoresRef.length, autoresToAssert.length);
-        for (int i = 0; i < autoresRef.length; i++){
-            assertEquals(i + "-" + autoresRef[i], i + "-" + autoresToAssert[i]);
-        }    }
 }

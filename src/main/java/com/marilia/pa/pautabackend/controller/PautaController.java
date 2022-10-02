@@ -19,8 +19,10 @@ import com.marilia.pa.pautabackend.service.PautaService;
 
 
 @Controller
-@CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/")
+@CrossOrigin(origins = "*", 
+             allowedHeaders = "*", 
+             maxAge = 3600)
+@RequestMapping("/pauta")
 public class PautaController {
     private final Logger log = Logger.getLogger(this.getClass().getName());
     
@@ -41,7 +43,7 @@ public class PautaController {
                             pauta.getRespostas()));
     }
 
-    @GetMapping(consumes = "application/json",
+    @GetMapping(
                 produces = "application/json",
                 value = "listar")
     public ResponseEntity<List<PautaDTO>> listarPautas(@RequestBody FiltroPautaDTO filtro){
