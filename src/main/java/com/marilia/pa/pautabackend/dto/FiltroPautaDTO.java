@@ -2,6 +2,9 @@ package com.marilia.pa.pautabackend.dto;
 
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class FiltroPautaDTO {
     private ZonedDateTime criadoAntesDe;
     private ZonedDateTime criadoApos;
