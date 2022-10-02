@@ -33,7 +33,7 @@ public class PautaController {
         value = "criar"
     )
     public ResponseEntity<PautaDTO> criarPauta(@RequestBody PautaDTO pauta){
-        log.info(pauta.getPauta().getAutor());
+        log.info("Nova pauta de " + pauta.getPauta().getAutor() + ", " + pauta.getPauta().getTitulo());
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(service.savePauta(
@@ -45,6 +45,11 @@ public class PautaController {
                 produces = "application/json",
                 value = "listar")
     public ResponseEntity<List<PautaDTO>> listarPautas(@RequestBody FiltroPautaDTO filtro){
+        log.info("Listar pautas de " + filtro.getAutorLike() + 
+                 ", entituladas " + filtro.getTituloLike() + 
+                 ", com texto " + filtro.getTextoLike() + 
+                 ", criadas entre " + filtro.getCriadoApos() + 
+                 " e " + filtro.getCriadoAntesDe());
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(service.getPautas(filtro));
