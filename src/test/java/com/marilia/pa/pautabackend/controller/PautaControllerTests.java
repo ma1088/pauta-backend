@@ -54,7 +54,7 @@ public class PautaControllerTests {
         when(pautaService.savePauta(any(Pauta.class), any(List.class)))
             .thenReturn(pauta);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/criar")
+        mockMvc.perform(MockMvcRequestBuilders.post("/pauta/criar")
                             .content(asJsonString(pauta))
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)

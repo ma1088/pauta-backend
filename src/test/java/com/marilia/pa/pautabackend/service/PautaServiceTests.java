@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -60,12 +62,35 @@ public class PautaServiceTests {
     }
 
     @Test
-    public void getPautasTest(){
+    public void getPautasTest_ByAutorAndTituloAndTextAndDtCriacaoBetween(){
+        //Dado
+        FiltroPautaDTO filtro = mockFiltro();
+
         //quando
-        when(pautaRepo.findAllByAutorContains(
-            any())).thenReturn(mockPautas());
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContainsAndDtCriacaoIsBetween
+            (anyString(), anyString(), anyString(), any(ZonedDateTime.class), any(ZonedDateTime.class)))
+            .thenReturn(mockPautas(2));
         when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
-        List<PautaDTO> pDto = service.getPautas(new FiltroPautaDTO());
+        List<PautaDTO> pDto = service.getPautas(filtro);
+
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(2, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
+
+    public void getPautasTest_ByAutorAndTituloAndTextAndDtCriacaoLessThanEquals(){
+        //Dado
+        FiltroPautaDTO filtro = mockFiltro();
+
+        //quando
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContainsAndDtCriacaoLessThanEqual
+            (anyString(), anyString(), anyString(), any(ZonedDateTime.class)))
+            .thenReturn(mockPautas(3));
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(filtro);
 
         //então
         assertNotNull(pDto);
@@ -75,15 +100,117 @@ public class PautaServiceTests {
         assertEquals(2,pDto.get(0).getRespostas().size());
     }
 
+    public void getPautasTest_ByAutorAndTituloAndTextAndDtCriacaoGreaterThanEquals(){
+        //Dado
+        FiltroPautaDTO filtro = mockFiltro();
+        
+        //quando
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContainsAndDtCriacaoGreaterThanEqual
+                        (anyString(), anyString(), anyString(), any(ZonedDateTime.class)))
+                        .thenReturn(mockPautas(3));
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(filtro);
+
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(4, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
+
+    public void getPautasTest_ByAutorAndTituloAndText(){
+        //Dado
+        FiltroPautaDTO filtro = mockFiltro();
+        
+        //quando
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContains
+            (anyString(), anyString(), anyString()))
+            .thenReturn(mockPautas(5));
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(filtro);
+
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(5, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
+
+    public void getPautasTest_ByAutorAndTitulo(){
+        //Dado
+        FiltroPautaDTO filtro = mockFiltro();
+        
+        //quando
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContains
+            (anyString(), anyString(), any()))
+            .thenReturn(mockPautas(6));
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(filtro);
+
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(6, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
+
+    public void getPautasTest_ByAutor(){
+        //Dado
+        FiltroPautaDTO filtro = mockFiltro();
+        
+        //quando
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContains
+            (anyString(), any(), any()))
+            .thenReturn(mockPautas(7));
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(filtro);
+
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(7, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
+
+    public void getPautasTest_AllRecords(){
+        //Dado
+        FiltroPautaDTO filtro = new FiltroPautaDTO();
+        
+        //quando
+        when(pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContains
+            (any(), any(), any()))
+            .thenReturn(mockPautas(8));
+        when(respostaRepo.findAllByIdPauta(anyLong())).thenReturn(mockRespostas());
+        List<PautaDTO> pDto = service.getPautas(filtro);
+
+        //então
+        assertNotNull(pDto);
+        assertNotNull(pDto.get(0).getPauta());
+        assertNotNull(pDto.get(0).getRespostas());
+        assertEquals(8, pDto.size());
+        assertEquals(2,pDto.get(0).getRespostas().size());
+    }
+
     private void configureRepositoryMocks(JpaRepository repository, Object toBeReturned1, Object toBeReturned2){
         when(repository.save(any()))
             .thenReturn(toBeReturned1)
             .thenReturn(toBeReturned2);
     }
 
-    private List<Pauta> mockPautas(){
+    private FiltroPautaDTO mockFiltro(){
+        ZonedDateTime dtMaxima = ZonedDateTime.of(2022, 9, 1, 0, 0, 0, 0, ZoneId.of("-03:00"));
+        ZonedDateTime dtMinima = ZonedDateTime.of(2022,9,30,0,0,0,0,ZoneId.of("-03:00"));
+        return new FiltroPautaDTO(dtMaxima, dtMinima, "Juca", "Bolinhas", "bolinhas");
+
+    }
+
+    private List<Pauta> mockPautas(int qtdPautas){
         List<Pauta> pautas = new ArrayList<>();
-        for (Long i = 0L; i < 3; i++){
+        for (Long i = 0L; i < qtdPautas; i++){
             pautas.add(new Pauta(i, "Juca", ZonedDateTime.now(), "titulo", "texto", 1));
         }
         return pautas;

@@ -35,12 +35,32 @@ public class PautaService {
     }
 
     public List<PautaDTO> getPautas(FiltroPautaDTO filtro) {
-        List<Pauta> pautas = pautaRepo.findAllByAutorContains(filtro.getAutorLike());
+        List<Pauta> pautas = buscaPautasPorFiltro(filtro);
+
         List<PautaDTO> pautasComRespostas = new ArrayList<>();
         pautas.forEach(p -> {
             List<Resposta> respostas = respostaRepo.findAllByIdPauta(p.getIdPauta());
             pautasComRespostas.add(new PautaDTO(p, respostas));
         });
         return pautasComRespostas;
+    }
+
+    private List<Pauta> buscaPautasPorFiltro(FiltroPautaDTO filtro){
+        if (filtro.getCriadoApos() != null && filtro.getCriadoAntesDe() != null){
+            return pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContainsAndDtCriacaoIsBetween
+                (filtro.getAutorLike(), filtro.getTituloLike(), filtro.getTextoLike(),
+                filtro.getCriadoApos(), filtro.getCriadoAntesDe());
+        } else if (filtro.getCriadoApos() != null && filtro.getCriadoAntesDe() == null){
+            return pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContainsAndDtCriacaoGreaterThanEqual
+                (filtro.getAutorLike(), filtro.getTituloLike(), filtro.getTextoLike(),
+                filtro.getCriadoApos());
+        } else if (filtro.getCriadoApos() == null && filtro.getCriadoAntesDe() != null){
+            return pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContainsAndDtCriacaoLessThanEqual
+                (filtro.getAutorLike(), filtro.getTituloLike(), filtro.getTextoLike(), 
+                filtro.getCriadoAntesDe());
+        } else {
+            return pautaRepo.findAllByAutorContainsAndTituloContainsAndTextoContains(
+                filtro.getAutorLike(), filtro.getTituloLike(), filtro.getTextoLike());
+        }
     }
 }
